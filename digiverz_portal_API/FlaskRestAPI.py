@@ -101,6 +101,25 @@ def project_api_routes(endpoints):
         
         return json.loads(json_util.dumps(user))
 
+    @endpoints.route("/add", methods=['POST'])
+    def add_user():
+        
+        collection = test_db.test
+        req = request.get_json()
+            
+        # _json = request.json
+        _password = request.json['password']
+        _name = request.json['username']
+        
+        
+        if _name and _password and request.method == 'POST':
+            inserted_id = collection.insert_one({'password':_password,'name':_name}).inserted_id
+            print(inserted_id)
+            resp = jsonify("user added succesfully")
+            resp.status_code = 200
+
+            return resp
+
     if __name__ == "__main__":
         app.run(debug=True)
     return endpoints
