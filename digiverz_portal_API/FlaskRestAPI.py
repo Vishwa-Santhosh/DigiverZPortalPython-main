@@ -13,7 +13,7 @@ import seaborn as sns
 
 from pymongo import MongoClient
 load_dotenv(find_dotenv())
-from flask import Flask
+from flask import Flask, request
 import datetime
 import json
 import numpy as np
@@ -35,7 +35,7 @@ from pyspark.sql.types import *
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 app = Flask(__name__)
-
+from flask_cors import cross_origin 
 
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -52,8 +52,9 @@ password = os.environ.get("MONGODB_PWD")
 connection_string = f"mongodb+srv://digiverz:digiverz@cluster0.pbat0bd.mongodb.net/?retryWrites=true&w=majority"
 
 client = MongoClient(connection_string)
+print("MongoDB Connected")
 test_db = client.DigiverZ_Portal
-collections = test_db.list_collection_names()
+# collections = test_db.list_collection_names()
 # print(collections)
 #*spark session.................................................
 
@@ -92,14 +93,20 @@ def project_api_routes(endpoints):
 
 
 
-    @endpoints.route("/user", methods=['GET'])
-    
+    @endpoints.route("/user", methods=['GET','POST'])
+    @cross_origin
     def find_all_peopl():
+        print(request.json)
+        resp = {}
         collection = test_db.login
-        user = collection.find() 
+        users = collection.find() 
         
         
-        return json.loads(json_util.dumps(user))
+        output = [{'user':user['user'] for user in users}]
+
+        resp ['data']=output
+        
+        return  resp
 
     @endpoints.route("/add", methods=['POST'])
     def add_user():
@@ -120,6 +127,6 @@ def project_api_routes(endpoints):
 
             return resp
 
-    if __name__ == "__main__":
-        app.run(debug=True)
+    # if __name__ == "__main__":
+    #     app.run(debug=True)
     return endpoints

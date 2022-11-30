@@ -26,7 +26,7 @@ import json
 import numpy as np
 from flask_pymongo import PyMongo
 from bson import json_util
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from flask import jsonify, request
 from bson.objectid import ObjectId
 from werkzeug.utils import secure_filename  
@@ -37,6 +37,7 @@ from datetime import datetime
 
 def eda_endpoint(endpoints):
     @endpoints.route("/file", methods=['POST'])
+    @cross_origin()
     def add_file():
         
         collection = test_db.dqresults
@@ -94,6 +95,7 @@ def eda_endpoint(endpoints):
 
 
     @endpoints.route("/dqhistory", methods=['GET'])
+    @cross_origin()
     def dq_result_history():
         resp = {}
         collection = test_db.dqresults
@@ -106,6 +108,7 @@ def eda_endpoint(endpoints):
         # return json.loads(json_util.dumps(user))
 
     @endpoints.route("/dqgraph_1", methods=['POST'])
+    @cross_origin()
     def DQ_graph():
        _req = request.get_json()
        
@@ -128,6 +131,7 @@ def eda_endpoint(endpoints):
     
 
     @endpoints.route("/dqgraph_2", methods=['POST'])
+    @cross_origin()
     def DQ_graph_2():
        _req = request.get_json()
        df = pd.read_pickle("./dummy.pkl")
@@ -148,6 +152,7 @@ def eda_endpoint(endpoints):
 
 
     @endpoints.route("/dqgraph_3", methods=['POST'])
+    @cross_origin()
     def DQ_graph_3():
        _req = request.get_json()
        df = pd.read_pickle("./dummy.pkl")
@@ -168,6 +173,7 @@ def eda_endpoint(endpoints):
        return resp   
 
     @endpoints.route("/dqgraph_4", methods=['POST'])
+    @cross_origin()
     def DQ_graph_4():
        _req = request.get_json()
        df = pd.read_pickle("./dummy.pkl")
@@ -188,6 +194,7 @@ def eda_endpoint(endpoints):
        return resp
 
     @endpoints.route("/dqgraph_5", methods=['POST'])
+    @cross_origin()
     def DQ_graph_5():
        _req = request.get_json()
        df = pd.read_pickle("./dummy.pkl")
@@ -208,6 +215,7 @@ def eda_endpoint(endpoints):
        return resp 
 
     @endpoints.route("/dqgraph_6", methods=['POST'])
+    @cross_origin()
     def DQ_graph_6():
        _req = request.get_json()
        df = pd.read_pickle("./dummy.pkl")
@@ -229,6 +237,7 @@ def eda_endpoint(endpoints):
        return resp
 
     @endpoints.route("/dqgraph_7", methods=['POST'])
+    @cross_origin()
     def DQ_graph_7():
        _req = request.get_json()
        df = pd.read_pickle("./dummy.pkl")
@@ -250,6 +259,7 @@ def eda_endpoint(endpoints):
        return resp
 
     @endpoints.route("/dqgraph_8", methods=['POST'])
+    @cross_origin()
     def DQ_graph_8():
        _req = request.get_json()
        df = pd.read_pickle("./dummy.pkl")

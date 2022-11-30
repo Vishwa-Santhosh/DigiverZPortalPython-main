@@ -7,7 +7,7 @@ from digiverz_portal_API.FlaskRestAPI import test_db
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import bson
+# import bson
 import pickle
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
@@ -15,15 +15,15 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 import json
-from bson import json_util
+# from bson import json_util
 from flask import jsonify, request
 import numpy as np
 from flask_cors import CORS, cross_origin
-from bson.json_util import dumps
+# from bson.json_util import dumps
 
 def model_builder_endpoint(endpoints):
     @endpoints.route("/mbresult", methods=['GET'])
-    @cross_origin()
+    # @cross_origin()
     def find_all_people():
         resp = {}
         collection = test_db.modelbuilder
@@ -34,6 +34,7 @@ def model_builder_endpoint(endpoints):
         return  resp #json.loads(json_util.dumps(user))  #jsonify(json_util.dumps(user))
 
     @endpoints.route("/modelBuilder", methods=['POST','GET'])
+    # @cross_origin()
     def model_builder_pickel():
 
         collection = test_db.modelbuilder
